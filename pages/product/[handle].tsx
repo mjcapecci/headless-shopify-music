@@ -2,22 +2,24 @@ import React from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import getProducts from '../../lib/getProducts';
 import useSWR from 'swr';
-import fetcher from '../../lib/fetcher';
+
+import Layout from '../../components/Layout/Layout';
+import ProductSection from '../../components/Product/ProductSection';
+
+const foundProducts = getProducts();
 
 const Product = ({ productData }) => {
-  const { data } = useSWR(null, fetcher, { initialData: productData });
-
+  const { data } = useSWR(`/api/quantity?handle=${productData.handle}`);
   return (
-    <div>
-      <h1>{productData.title}</h1>
-      <img src={productData.images[0].src} width='300px' />
-    </div>
+    <Layout>
+      <ProductSection product={productData} dynamic={data} />
+    </Layout>
   );
 };
 
 export const getStaticPaths: GetStaticPaths = async (context) => {
-  const allProductData = await getProducts();
-  const paths = allProductData.products.map((product) => {
+  const allProductData = (await foundProducts).products;
+  const paths = allProductData.map((product) => {
     return { params: { handle: product.handle } };
   });
 
@@ -28,7 +30,7 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const allProductData = await getProducts();
+  const allProductData = await foundProducts;
   const productData = allProductData.getProductByHandle(params.handle);
 
   return {

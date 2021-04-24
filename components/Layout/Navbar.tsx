@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 const Navbar = () => {
   return (
@@ -17,11 +18,17 @@ const Navbar = () => {
           >
             <path d='M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5'></path>
           </svg>
-          <span className='ml-3 text-xl'>Tailblocks</span>
+          <Link href='/'>
+            <span className='ml-3 text-xl'>Music Tailor</span>
+          </Link>
         </a>
         <nav className='md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center'>
-          <a className='mr-5 hover:text-gray-900'>Featured</a>
-          <a className='mr-5 hover:text-gray-900'>All Music</a>
+          <Link href='/all'>
+            <span className='mr-5 hover:text-gray-900'>All Music</span>
+          </Link>
+          <Link href='/order'>
+            <span className='mr-5 hover:text-gray-900'>Custom Order</span>
+          </Link>
         </nav>
       </div>
     </header>

@@ -5,7 +5,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { handle } = req.query;
 
   const {
-    SHOPIFY_API_KEY,
     SHOPIFY_API_PASSWORD,
     SHOPIFY_STORE_NAME,
     SHOPIFY_ACCESS_TOKEN,

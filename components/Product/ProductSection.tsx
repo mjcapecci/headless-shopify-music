@@ -1,10 +1,22 @@
 import React from 'react';
+import { useCart } from '../../context/cart';
+import quantity from '../../pages/api/quantity';
 
 interface Props {
   product: Product;
 }
 
 const ProductSection = ({ product }: Props) => {
+  const { addToCart } = useCart();
+
+  const lineItem: LineItem = {
+    title: product.title,
+    handle: product.handle,
+    variantId: product.variants[0].id,
+    quantity: 1,
+    price: product.variants[0].price,
+  };
+
   return (
     <section className='text-gray-600 body-font overflow-hidden'>
       <div className='container px-5 py-24 mx-auto'>
@@ -28,10 +40,13 @@ const ProductSection = ({ product }: Props) => {
             <div className='flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5'></div>
             <div className='flex'>
               <span className='title-font font-medium text-2xl text-gray-900'>
-                $58.00
+                ${product.variants[0].price}
               </span>
-              <button className='flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded'>
-                Button
+              <button
+                className='flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded'
+                onClick={() => addToCart(lineItem)}
+              >
+                Add to Cart
               </button>
             </div>
           </div>

@@ -3,8 +3,14 @@ import Layout from '../components/Layout/Layout';
 import getProducts from '../lib/getProducts';
 
 import ProductCard from '../components/Collections/ProductCard';
+import { useCart } from '../context/cart';
 
 const Collections = ({ allProducts }) => {
+  const { closeCartOnNewPage } = useCart();
+  useEffect(() => {
+    closeCartOnNewPage();
+  }, []);
+
   const generateProductCardSize = () => {
     const count = allProducts.length;
     if (count < 3) return count;

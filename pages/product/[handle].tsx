@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import getProducts from '../../lib/getProducts';
-import useSWR from 'swr';
+import { useCart } from '../../context/cart';
 
 import Layout from '../../components/Layout/Layout';
 import ProductSection from '../../components/Product/ProductSection';
@@ -9,10 +9,14 @@ import ProductSection from '../../components/Product/ProductSection';
 const foundProducts = getProducts();
 
 const Product = ({ productData }) => {
-  const { data } = useSWR(`/api/quantity?handle=${productData.handle}`);
+  const { closeCartOnNewPage } = useCart();
+  useEffect(() => {
+    closeCartOnNewPage();
+  }, []);
+
   return (
     <Layout>
-      <ProductSection product={productData} dynamic={data} />
+      <ProductSection product={productData} />
     </Layout>
   );
 };

@@ -25,3 +25,11 @@ type Image = {
   id: string;
   src: string;
 };
+
+type LineItem = {
+  title: string;
+  handle: string;
+  variantId: string;
+  quantity: number;
+  price: string;
+};
